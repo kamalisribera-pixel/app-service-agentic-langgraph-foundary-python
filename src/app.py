@@ -8,6 +8,11 @@ from .services import TaskService
 from .agents import LangGraphTaskAgent, FoundryTaskAgent
 from .routes import create_api_routes
 
+import os
+
+program_id = os.getenv("ProgramId")
+print(f"ProgramId: {program_id}")
+
 # Load environment variables from .env file
 load_dotenv()
 
