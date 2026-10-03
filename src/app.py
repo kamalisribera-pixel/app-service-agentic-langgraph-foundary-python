@@ -10,9 +10,14 @@ from .routes import create_api_routes
 
 import os
 import logging
+from fastapi import FastAPI
 
-program_id = os.getenv("ProgramId")
-logging.info(f"ProgramId: {program_id}")
+app = FastAPI()
+
+@app.on_event("startup")
+async def startup_event():
+    program_id = os.getenv("ProgramId")
+    logging.info(f"ProgramId: {program_id}")
 
 # Load environment variables from .env file
 load_dotenv()
