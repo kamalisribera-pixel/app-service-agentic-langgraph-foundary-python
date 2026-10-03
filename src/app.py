@@ -8,16 +8,24 @@ from .services import TaskService
 from .agents import LangGraphTaskAgent, FoundryTaskAgent
 from .routes import create_api_routes
 
+
+from contextlib import asynccontextmanager
 import os
 import logging
 from fastapi import FastAPI
 
-app = FastAPI()
 
-@app.on_event("startup")
-async def startup_event():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     program_id = os.getenv("ProgramId")
     logging.info(f"ProgramId: {program_id}")
+
+    yield
+
+    # shutdown code here if needed
+
+
+app = FastAPI(lifespan=lifespan)
 
 # Load environment variables from .env file
 load_dotenv()
